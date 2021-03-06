@@ -7,6 +7,7 @@ const modalRoot = document.getElementById('root-modal');
 class Modal extends Component {
   static = {
     onCLoseModal: PropTypes.func,
+    children: PropTypes.node,
   };
 
   componentDidMount() {
