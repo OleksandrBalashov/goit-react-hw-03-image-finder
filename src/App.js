@@ -37,7 +37,7 @@ class App extends Component {
 
   fetchQuery = async () => {
     const { searchQuery, currentPage } = this.state;
-    const options = { searchQuery, currentPage };
+    const options = { q: searchQuery, page: currentPage };
 
     this.setState({ loader: true });
 
