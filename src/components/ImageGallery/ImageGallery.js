@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import ImageGalleryItem from './ImageGalleryItem';
 
 const ImageGallery = ({ query, onOpenModal }) => (
