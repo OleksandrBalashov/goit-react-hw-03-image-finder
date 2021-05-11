@@ -1,8 +1,11 @@
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import PropTypes from 'prop-types';
 
-const Spinner = ({ isVisible }) => (
+interface Props {
+  isVisible: boolean;
+}
+
+const Spinner = ({ isVisible }: Props) => (
   <div className="Spinner">
     <Loader
       type="BallTriangle"
@@ -13,9 +16,5 @@ const Spinner = ({ isVisible }) => (
     />
   </div>
 );
-
-Spinner.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
-};
 
 export default Spinner;

@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import { Component, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 
-const modalRoot = document.getElementById('root-modal');
+const modalRoot = document.getElementById('root-modal')!;
 
-class Modal extends Component {
-  static = {
-    onCLoseModal: PropTypes.func,
-    children: PropTypes.node,
-  };
+interface Props {
+  onCloseModal(e?: React.MouseEvent<HTMLImageElement, MouseEvent>): Promise<void>
+  children: ReactNode
+}
+
+class Modal extends Component<Props> {
 
   componentDidMount() {
     window.addEventListener('keydown', this.handelKeydownKey);
@@ -18,13 +18,13 @@ class Modal extends Component {
     window.removeEventListener('keydown', this.handelKeydownKey);
   }
 
-  handleBackdropClick = ({ target, currentTarget }) => {
+  handleBackdropClick = ({ target, currentTarget }: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (target === currentTarget) {
       this.props.onCloseModal();
     }
   };
 
-  handelKeydownKey = ({ code }) => {
+  handelKeydownKey = ({ code }: any) => {
     if (code === 'Escape') {
       this.props.onCloseModal();
     }

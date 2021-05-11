@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-class Searchbar extends Component {
+interface Props {
+  onSubmit: (searchQuery: string) => void 
+};
+
+interface State {
+  searchQuery: string
+};
+
+class Searchbar extends Component<Props, State> {
   state = {
     searchQuery: '',
   };
 
-  static = {
-    onSubmit: PropTypes.func,
-  };
-
-  handleChangeInput = e => {
+  handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
 
     this.setState({ searchQuery: value });
   };
 
-  handleSubmit = async e => {
+  handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { searchQuery } = this.state;

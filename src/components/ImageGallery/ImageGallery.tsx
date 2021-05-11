@@ -1,18 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import ImageGalleryItem from './ImageGalleryItem';
 
-const ImageGallery = ({ query, onOpenModal }) => (
+interface Props {
+  query: string[];
+  onOpenModal(
+    e?: React.MouseEvent<HTMLImageElement, MouseEvent>,
+  ): Promise<void>;
+}
+
+const ImageGallery = ({ query, onOpenModal }: Props) => (
   <>
     <ul className="ImageGallery">
       <ImageGalleryItem query={query} onOpen={onOpenModal} />
     </ul>
   </>
 );
-
-ImageGallery.propTypes = {
-  query: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
 
 export default ImageGallery;

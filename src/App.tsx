@@ -1,37 +1,68 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import BtnLoadMore from './components/BtnLoadMore';
-import ImageGallery from './components/ImageGallery/';
+import ImageGallery from './components/ImageGallery';
 import Spinner from './components/Loader';
 import Modal from './components/Modal';
 import BigImageModal from './components/Modal/BigImageModal/BigImageModal';
-import Searchbar from './components/Searchbar/';
+import Searchbar from './components/Searchbar';
 import fetchApi from './Services';
 
-const initialState = {
-  query: [],
-  currentPage: 1,
-  selectImg: '',
-  showModal: false,
-  error: null,
-};
+// interface Props {
+//   initialState: {
+//     query: string[];
+//     currentPage: number;
+//     selectImg: string;
+//     showModal: boolean;
+//     error: null | boolean;
+//   };
+// }
 
-class App extends Component {
+interface State {
+  searchQuery: string;
+  loader: boolean;
+  query: string[];
+  currentPage: number;
+  selectImg: string;
+  showModal: boolean;
+  error: null | boolean;
+  children?: ReactNode;
+}
+
+class App extends Component<{}, State> {
+  // static defaultProps = {
+  //   initialState: {
+  //     query: [],
+  //     currentPage: 1,
+  //     selectImg: '',
+  //     showModal: false,
+  //     error: null,
+  //   },
+  // };
+
   state = {
     searchQuery: '',
     loader: false,
-    ...initialState,
+    query: [],
+    currentPage: 1,
+    selectImg: '',
+    showModal: false,
+    error: null,
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: {}, prevState: State) {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchQuery();
     }
   }
 
-  handleSubmitForm = userQuery => {
+  handleSubmitForm = (userQuery: string) => {
     this.setState({
       searchQuery: userQuery,
-      ...initialState,
+      query: [],
+      currentPage: 1,
+      selectImg: '',
+      showModal: false,
+      error: null,
     });
   };
 
@@ -58,7 +89,7 @@ class App extends Component {
     }
   };
 
-  checkLengthArray = value => {
+  checkLengthArray = (value: number) => {
     if (value > 0 && value < 12) {
       this.setState({ error: true });
     }
@@ -71,13 +102,13 @@ class App extends Component {
     });
   };
 
-  toggleModal = async e => {
+  toggleModal = async (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     await this.setState(({ showModal }) => ({
       showModal: !showModal,
     }));
 
     if (this.state.showModal) {
-      const { url } = e.target.dataset;
+      const url = (e.target as HTMLImageElement).dataset.url!;
 
       this.setState({ selectImg: url });
     }
@@ -99,7 +130,7 @@ class App extends Component {
 
         {showModal && (
           <Modal onCloseModal={this.toggleModal}>
-            <BigImageModal largeImg={selectImg} onClose={this.toggleModal} />
+            <BigImageModal largeImg={selectImg} />
           </Modal>
         )}
       </div>

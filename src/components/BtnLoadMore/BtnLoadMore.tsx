@@ -1,16 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const BtnLoadMore = ({ onClickBtn }) => {
+interface Props {
+  onClickBtn: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+const BtnLoadMore = ({ onClickBtn }: Props) => {
   return (
     <button type="button" className="Button" onClick={onClickBtn}>
       Load More
     </button>
   );
-};
-
-BtnLoadMore.propTypes = {
-  onClickBtn: PropTypes.func,
 };
 
 export default BtnLoadMore;
